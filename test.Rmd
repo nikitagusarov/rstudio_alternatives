@@ -1,0 +1,24 @@
+---
+title: "Testing"
+output: pdf_document
+---
+
+```{r}
+x = 1:10
+y = 10:1 
+plot(x, y)
+```
+
+```{r eval = FALSE}
+library(ggplot2)
+library(plotly)
+library(gapminder)
+
+p <- gapminder %>%
+  filter(year == 1977) %>%
+  ggplot( aes(gdpPercap, lifeExp, size = pop, color = continent)) +
+  geom_point() +
+  theme_bw()
+
+ggplotly(p)
+```
