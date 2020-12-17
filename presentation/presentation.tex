@@ -1,0 +1,496 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  11pt,
+  ignorenonframetext,
+  aspectratio=169]{beamer}
+\usepackage{pgfpages}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+% Prevent slide breaks in the middle of a paragraph
+\widowpenalties 1 10000
+\raggedbottom
+\setbeamertemplate{part page}{
+  \centering
+  \begin{beamercolorbox}[sep=16pt,center]{part title}
+    \usebeamerfont{part title}\insertpart\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{section page}{
+  \centering
+  \begin{beamercolorbox}[sep=12pt,center]{part title}
+    \usebeamerfont{section title}\insertsection\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{subsection page}{
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center]{part title}
+    \usebeamerfont{subsection title}\insertsubsection\par
+  \end{beamercolorbox}
+}
+\AtBeginPart{
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \frame{\subsectionpage}
+}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usetheme[]{Montpellier}
+\usecolortheme{beaver}
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Alternatives to RStudio},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\newif\ifbibliography
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Colors
+\usepackage{colortbl}
+
+% Change section names style
+\titlegraphic{\flushright\includegraphics[height = 8mm]{../images/gael_logo_3.jpg}
+  \includegraphics[height = 8mm]{../images/gscop_logo.jpg}
+  \includegraphics[height = 8mm]{../images/inp_logo.png} 
+}
+
+% Change argmax / argmin looks
+\usepackage{amsmath}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+% Background images 
+% \usepackage[pages = some, scale = 1, angle = 0, opacity = 1]{background}
+
+% Floats
+\usepackage{placeins}
+
+% Multiple rows
+\usepackage{multirow}
+
+% Multiple columns of text
+\usepackage{multicol}
+
+% Combining cells
+\usepackage{makecell}
+
+% Include schemas and tikz graphics
+\usepackage{tikz}
+\usetikzlibrary{er,positioning}
+
+% Margins
+\newcommand{\fullframegraphic}[1]{
+  \includegraphics[height=\paperheight,width=\paperwidth,keepaspectratio]{#1}
+}
+\makeatletter
+\newlength\beamerleftmargin
+\setlength\beamerleftmargin{\Gm@lmargin}
+\makeatother
+
+% Add footline
+\makeatletter
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}{Nikita Gusarov}
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{institute in head/foot}\insertshortdate
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+    \usebeamerfont{date in head/foot}\insertshortinstitute{}\hspace*{1em}
+   %\insertframenumber{} / \inserttotalframenumber\hspace*{2ex} % old version
+    \insertframenumber{} \hspace*{2ex} % new version without total frames
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+\makeatother
+
+\title{Alternatives to RStudio}
+\subtitle{Workflow organisation with R}
+\author{Nikita Gusarov\\
+\scriptsize GAEL (UGA) - G-SCOP (Grenoble INP)}
+\date{17/12/2020}
+
+\begin{document}
+\frame{\titlepage}
+
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+\begin{frame}{Workflow}
+\protect\hypertarget{workflow}{}
+\begin{center}\includegraphics{presentation_files/figure-beamer/unnamed-chunk-2-1} \end{center}
+\end{frame}
+
+\begin{frame}{Workflow types}
+\protect\hypertarget{workflow-types}{}
+\begin{itemize}
+\tightlist
+\item
+  Text editor
+\item
+  Notebook
+\item
+  Integrated Development Environment (IDE)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section}{}
+\vspace*{-10.6mm}\hspace*{-\beamerleftmargin}\hspace*{-1.5mm}
+\fullframegraphic{"../captures/Capture d’écran (0)"}
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-1}{}
+\vspace*{-10.6mm}\hspace*{-\beamerleftmargin}\hspace*{-1.5mm}
+\fullframegraphic{"../captures/Capture d’écran (1)"}
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-2}{}
+\vspace*{-10.6mm}\hspace*{-\beamerleftmargin}\hspace*{-1.5mm}
+\fullframegraphic{"../captures/Capture d’écran (3)"}
+\end{frame}
+
+\hypertarget{what-is-rstudio}{%
+\section{What is RStudio ?}\label{what-is-rstudio}}
+
+\begin{frame}{}
+\protect\hypertarget{section-3}{}
+\vspace*{-10.6mm}\hspace*{-\beamerleftmargin}\hspace*{-1.5mm}
+\fullframegraphic{"../captures/Capture d’écran (2)"}
+\end{frame}
+
+\begin{frame}{``An IDE that was built for R''}
+\protect\hypertarget{an-ide-that-was-built-for-r}{}
+\begin{itemize}
+\tightlist
+\item
+  Syntax highlighting, code completion, and smart indentation
+\item
+  Execute R code directly from the source editor
+\item
+  Quickly jump to function definitions
+\end{itemize}
+\end{frame}
+
+\begin{frame}{``Helps bring your workflow together''}
+\protect\hypertarget{helps-bring-your-workflow-together}{}
+\begin{itemize}
+\tightlist
+\item
+  Integrated R help and documentation
+\item
+  Easily manage multiple working directories using projects
+\item
+  Workspace browser and data viewer
+\end{itemize}
+\end{frame}
+
+\begin{frame}{``Powerful authoring and debugging''}
+\protect\hypertarget{powerful-authoring-and-debugging}{}
+\begin{itemize}
+\tightlist
+\item
+  Interactive debugger to diagnose and fix errors quickly
+\item
+  Extensive package development tools
+\item
+  Authoring with Sweave and R Markdown
+\end{itemize}
+\end{frame}
+
+\begin{frame}{And more \ldots{}}
+\protect\hypertarget{and-more}{}
+\begin{itemize}
+\tightlist
+\item
+  Runs on most desktops or on a server and accessed over the web
+\item
+  Integrates the tools you use with R into a single environment
+\item
+  Includes powerful coding tools designed to enhance your productivity
+\item
+  Enables rapid navigation to files and functions
+\end{itemize}
+\end{frame}
+
+\begin{frame}{And more \ldots{}}
+\protect\hypertarget{and-more-1}{}
+\begin{itemize}
+\tightlist
+\item
+  Makes it easy to start new or find existing projects
+\item
+  Has integrated support for Git and Subversion
+\item
+  Supports authoring HTML, PDF, Word Documents, and slide shows
+\item
+  Supports interactive graphics with Shiny and ggvis
+\end{itemize}
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-4}{}
+\vspace*{-10.6mm}\hspace*{-\beamerleftmargin}\hspace*{-1.5mm}
+\fullframegraphic{"../captures/Capture d’écran (3)"}
+\end{frame}
+
+\hypertarget{what-rstudio-is-not}{%
+\section{What RStudio is not \ldots{}}\label{what-rstudio-is-not}}
+
+\begin{frame}{Not a multi-language DE}
+\protect\hypertarget{not-a-multi-language-de}{}
+\vspace*{-10.6mm}\hspace*{-\beamerleftmargin}\hspace*{-1.5mm}
+\fullframegraphic{"../captures/Capture d’écran (12)"}
+\end{frame}
+
+\hypertarget{what-about-alternatives}{%
+\section{What about alternatives ?}\label{what-about-alternatives}}
+
+\hypertarget{jupyter}{%
+\section{Jupyter}\label{jupyter}}
+
+\begin{frame}{}
+\protect\hypertarget{section-5}{}
+\vspace*{-10.6mm}\hspace*{-\beamerleftmargin}\hspace*{-1.5mm}
+\fullframegraphic{"../captures/Capture d’écran (15)"}
+\end{frame}
+
+\begin{frame}{Key advertising factors}
+\protect\hypertarget{key-advertising-factors}{}
+\begin{itemize}
+\tightlist
+\item
+  A web application
+\end{itemize}
+
+\begin{itemize}
+\tightlist
+\item
+  Notebook documents
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Features}
+\protect\hypertarget{features}{}
+\begin{itemize}
+\tightlist
+\item
+  In-browser editing for code
+\item
+  Automatic syntax highlighting, indentation, and tab completion
+\item
+  The ability to execute code from the browser
+\item
+  Results of computations is attached to the code which generated them
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Features}
+\protect\hypertarget{features-1}{}
+\begin{itemize}
+\tightlist
+\item
+  Displaying the result of computation using rich media representations
+  (HTML, LaTeX, PNG, SVG, etc)
+\item
+  In-browser editing for rich text using the Markdown markup language
+\item
+  Commentary for the code is not limited to plain text
+\item
+  Include mathematical notation within markdown cells using LaTeX, and
+  rendered natively by MathJax.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-6}{}
+\vspace*{-10.6mm}\hspace*{-\beamerleftmargin}\hspace*{-1.5mm}
+\fullframegraphic{"../captures/Capture d’écran (1)"}
+\end{frame}
+
+\begin{frame}{Drawbacks}
+\protect\hypertarget{drawbacks}{}
+\end{frame}
+
+\begin{frame}{Version control}
+\protect\hypertarget{version-control}{}
+The .ipynb Jupyter Notebook files are blobs of JSON that also store cell
+output as well as metadata.
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-7}{}
+\vspace*{-10.6mm}\hspace*{-\beamerleftmargin}\hspace*{-1.5mm}
+\fullframegraphic{"../captures/Capture d’écran (14)"}
+\end{frame}
+
+\begin{frame}{Inline Code Rendering}
+\protect\hypertarget{inline-code-rendering}{}
+In Jupyter Notebooks, it is impossible to use the inline expressions
+without additional markdown modules.
+\end{frame}
+
+\hypertarget{vs-code}{%
+\section{VS Code}\label{vs-code}}
+
+\begin{frame}{}
+\protect\hypertarget{section-8}{}
+\vspace*{-10.6mm}\hspace*{-\beamerleftmargin}\hspace*{-1.5mm}
+\fullframegraphic{"../captures/Capture d’écran (4)"}
+\end{frame}
+
+\begin{frame}{VS Code selling features}
+\protect\hypertarget{vs-code-selling-features}{}
+\begin{itemize}
+\tightlist
+\item
+  Simplicity of a source code editor
+\item
+  Powerful developer tooling (IntelliSense, code completion and
+  debugging)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Available for macOS, Linux, and Windows}
+\protect\hypertarget{available-for-macos-linux-and-windows}{}
+Visual Studio Code supports macOS, Linux, and Windows - so you can hit
+the ground running, no matter the platform.
+\end{frame}
+
+\begin{frame}{``Edit, build, and debug with ease''}
+\protect\hypertarget{edit-build-and-debug-with-ease}{}
+\begin{itemize}
+\tightlist
+\item
+  Lightning fast source code editor
+\item
+  Support for hundreds of languages
+\item
+  Intuitive keyboard shortcuts, easy customization and
+  community-contributed mappings
+\item
+  Interactive debugger
+\item
+  Build and scripting tools to perform common tasks
+\item
+  Support for Git so you can work with source control without leaving
+  the editor including viewing pending changes diffs
+\end{itemize}
+\end{frame}
+
+\begin{frame}{``Make it your own''}
+\protect\hypertarget{make-it-your-own}{}
+\begin{itemize}
+\tightlist
+\item
+  Customization through extensions
+\item
+  Open-source project
+\end{itemize}
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-9}{}
+\vspace*{-10.6mm}\hspace*{-\beamerleftmargin}\hspace*{-1.5mm}
+\fullframegraphic{"../captures/Capture d’écran (5)"}
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-10}{}
+\vspace*{-10.6mm}\hspace*{-\beamerleftmargin}\hspace*{-1.5mm}
+\fullframegraphic{"../captures/Capture d’écran (6)"}
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-11}{}
+\vspace*{-10.6mm}\hspace*{-\beamerleftmargin}\hspace*{-1.5mm}
+\fullframegraphic{"../captures/Capture d’écran (8)"}
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-12}{}
+\vspace*{-10.6mm}\hspace*{-\beamerleftmargin}\hspace*{-1.5mm}
+\fullframegraphic{"../captures/Capture d’écran (13)"}
+\end{frame}
+
+\begin{frame}{References}
+\protect\hypertarget{references}{}
+\small
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://insights.stackoverflow.com/survey/2019\#technology-_-most-popular-development-environments}{StackOverflow
+  survey}
+\item
+  \href{https://code.visualstudio.com/docs/editor/whyvscode}{Visual
+  Studio Code}
+\item
+  \href{https://rstudio.com/products/rstudio/features/}{RStudio and
+  features}
+\item
+  \href{https://forums.fast.ai/t/text-editor-vs-jupyter-notebook-vs-ides/22069}{Discussion
+  of editors}
+\item
+  \href{https://stackshare.io/stackups/jupyter-vs-rstudio}{Jupyter
+  against RStudio}
+\item
+  \href{https://stackshare.io/stackups/rstudio-vs-visual-studio-code}{VS
+  Code against RStudio}
+\item
+  \href{https://renkun.me/2019/12/11/writing-r-in-vscode-a-fresh-start/}{Starting
+  with R in VS Code}
+\item
+  \href{https://www.makeuseof.com/tag/visual-studio-code-vs-atom/}{VS
+  Code and Atom}
+\end{itemize}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,61 @@
+% Colors
+\usepackage{colortbl}
+
+% Change section names style
+\titlegraphic{\flushright\includegraphics[height = 8mm]{../images/gael_logo_3.jpg}
+  \includegraphics[height = 8mm]{../images/gscop_logo.jpg}
+  \includegraphics[height = 8mm]{../images/inp_logo.png} 
+}
+
+% Change argmax / argmin looks
+\usepackage{amsmath}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+% Background images 
+% \usepackage[pages = some, scale = 1, angle = 0, opacity = 1]{background}
+
+% Floats
+\usepackage{placeins}
+
+% Multiple rows
+\usepackage{multirow}
+
+% Multiple columns of text
+\usepackage{multicol}
+
+% Combining cells
+\usepackage{makecell}
+
+% Include schemas and tikz graphics
+\usepackage{tikz}
+\usetikzlibrary{er,positioning}
+
+% Margins
+\newcommand{\fullframegraphic}[1]{
+  \includegraphics[height=\paperheight,width=\paperwidth,keepaspectratio]{#1}
+}
+\makeatletter
+\newlength\beamerleftmargin
+\setlength\beamerleftmargin{\Gm@lmargin}
+\makeatother
+
+% Add footline
+\makeatletter
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}{Nikita Gusarov}
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{institute in head/foot}\insertshortdate
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+    \usebeamerfont{date in head/foot}\insertshortinstitute{}\hspace*{1em}
+   %\insertframenumber{} / \inserttotalframenumber\hspace*{2ex} % old version
+    \insertframenumber{} \hspace*{2ex} % new version without total frames
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+\makeatother
